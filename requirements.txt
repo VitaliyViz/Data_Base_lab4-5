@@ -12,3 +12,4 @@ jsonschema
 redis
 SQLAlchemy==1.4.48
 PyMySQL==1.1.1
+mysql-connector-python==8.1.0
