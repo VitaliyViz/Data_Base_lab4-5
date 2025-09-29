@@ -7,7 +7,6 @@ import yaml
 from flask import Flask
 from my_project import create_app
 from my_project.auth.controller.general_controller import general_controller
-from my_project.auth.service.general_service import insert_data
 from my_project.auth.controller.general_controller import animator_controller
 from my_project.auth.controller.general_controller import noname_animator_controller
 from my_project.auth.controller.general_controller import mmas_controller
@@ -41,14 +40,14 @@ if __name__ == '__main__':
             config_data = config_data_dict[DEVELOPMENT]
             app = create_app(config_data, additional_config)
             register_blueprints(app)
-            Swagger(app, template_file=None)
+            Swagger(app)
             app.run(host="0.0.0.0", port=DEVELOPMENT_PORT, debug=True)
 
         elif flask_env == PRODUCTION:
             config_data = config_data_dict[PRODUCTION]
             app = create_app(config_data, additional_config)
             register_blueprints(app)
-            Swagger(app, template_file=None)
+            Swagger(app)
             serve(app, host=HOST, port=PRODUCTION_PORT)
 
         else:
