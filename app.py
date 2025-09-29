@@ -40,6 +40,10 @@ if __name__ == '__main__':
             config_data = config_data_dict[DEVELOPMENT]
             app = create_app(config_data, additional_config)
             register_blueprints(app) 
+            # print("\nAll endpoint list:")
+            # for rule in app.url_map.iter_rules():
+            #     methods = ",".join(rule.methods)
+            #     print(f"{rule} -> {methods}")
             app.run(host="0.0.0.0", port=DEVELOPMENT_PORT, debug=True)
 
         elif flask_env == PRODUCTION:
