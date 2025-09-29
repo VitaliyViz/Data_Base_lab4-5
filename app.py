@@ -12,6 +12,7 @@ from my_project.auth.controller.general_controller import animator_controller
 from my_project.auth.controller.general_controller import noname_animator_controller
 from my_project.auth.controller.general_controller import mmas_controller
 from my_project.auth.controller.general_controller import animator_distribute_controller
+from flasgger import Swagger
 
 DEVELOPMENT_PORT = 5000
 PRODUCTION_PORT = 8080
@@ -39,13 +40,15 @@ if __name__ == '__main__':
         if flask_env == DEVELOPMENT:
             config_data = config_data_dict[DEVELOPMENT]
             app = create_app(config_data, additional_config)
-            register_blueprints(app) 
+            register_blueprints(app)
+            Swagger(app, template_file=None)
             app.run(host="0.0.0.0", port=DEVELOPMENT_PORT, debug=True)
 
         elif flask_env == PRODUCTION:
             config_data = config_data_dict[PRODUCTION]
             app = create_app(config_data, additional_config)
             register_blueprints(app)
+            Swagger(app, template_file=None)
             serve(app, host=HOST, port=PRODUCTION_PORT)
 
         else:
