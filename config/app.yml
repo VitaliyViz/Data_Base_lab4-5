@@ -5,14 +5,14 @@ COMMON: &common
 development:
   <<: *common
   DEBUG: True
-#  SQLALCHEMY_DATABASE_URI: 'sqlite://'
-#  SQLALCHEMY_DATABASE_URI: 'sqlite:///device_db.sqlite'
-  SQLALCHEMY_DATABASE_URI: 'mysql://root:a4b8c11g3@localhost/lab3'
+  SQLALCHEMY_DATABASE_URI: 'mysql://ubuntu:1111@localhost/my_database'
 
 production:
   <<: *common
-  SQLALCHEMY_DATABASE_URI: 'mysql://root:a4b8c11g3@localhost/lab3'
+  SQLALCHEMY_DATABASE_URI: 'mysql://ubuntu:1111@localhost/my_database'
 
 ADDITIONAL_CONFIG:
-  MYSQL_ROOT_USER: root
-  MYSQL_ROOT_PASSWORD: root
+  MYSQL_USER: ubuntu
+  MYSQL_PASSWORD: '1111'
+  MYSQL_DATABASE: my_database
+  MYSQL_HOST: localhost
