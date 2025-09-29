@@ -40,7 +40,7 @@ if __name__ == '__main__':
             config_data = config_data_dict[DEVELOPMENT]
             app = create_app(config_data, additional_config)
             register_blueprints(app) 
-            app.run(port=DEVELOPMENT_PORT, debug=True)
+            app.run(host="0.0.0.0", port=DEVELOPMENT_PORT, debug=True)
 
         elif flask_env == PRODUCTION:
             config_data = config_data_dict[PRODUCTION]
