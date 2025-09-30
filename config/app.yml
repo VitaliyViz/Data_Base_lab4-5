@@ -9,12 +9,12 @@ development:
 
 production:
   <<: *common
-  SQLALCHEMY_DATABASE_URI: "mysql://ubuntu:11111111@localhost/my_database"
+  SQLALCHEMY_DATABASE_URI: "mysql://ubuntu:11111111@my-database.c9skgymu8b1a.eu-north-1.rds.amazonaws.com/my_database"
 
 ADDITIONAL_CONFIG:
   MYSQL_USER: "ubuntu"
   MYSQL_PASSWORD: "11111111"
   MYSQL_DATABASE: "my_database"
-  MYSQL_HOST: "localhost"
+  MYSQL_HOST: "my-database.c9skgymu8b1a.eu-north-1.rds.amazonaws.com"
   MYSQL_ROOT_USER: "ubuntu"
   MYSQL_ROOT_PASSWORD: "11111111"
