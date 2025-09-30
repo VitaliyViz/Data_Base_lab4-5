@@ -48,6 +48,8 @@ if __name__ == '__main__':
             app = create_app(config_data, additional_config)
             register_blueprints(app)
             Swagger(app)
+            import logging
+            logging.basicConfig(level=logging.INFO)
             serve(app, host=HOST, port=PRODUCTION_PORT)
 
         else:
