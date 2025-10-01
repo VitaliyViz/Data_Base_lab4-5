@@ -1,6 +1,7 @@
 #!/bin/bash
-cd /home/ubuntu/Data_Base_lab4-5        # шлях до твого проєкту
-git pull origin main                   # тягнемо останні зміни з Git
-source venv/bin/activate               # активуємо віртуальне середовище
-pip install -r requirements.txt       # оновлюємо залежності
-sudo systemctl restart myproject.service  # перезапускаємо сервіс
+cd /home/ubuntu/Data_Base_lab4-5 || exit
+git fetch origin main
+git reset --hard origin/main
+source venv/bin/activate
+pip install -r requirements.txt
+sudo systemctl restart myproject.service
