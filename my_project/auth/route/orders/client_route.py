@@ -1,9 +1,3 @@
-"""
-2022
-apavelchak@gmail.com
-© Andrii Pavelchak
-"""
-
 from http import HTTPStatus
 
 from flask import Blueprint, jsonify, Response, request, make_response

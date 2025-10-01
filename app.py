@@ -17,10 +17,6 @@ PRODUCTION = "production"
 FLASK_ENV = "FLASK_ENV"
 ADDITIONAL_CONFIG = "ADDITIONAL_CONFIG"
 
-# ---------------------------
-# Створюємо Flask app для всіх випадків
-# ---------------------------
-
 flask_env = os.environ.get(FLASK_ENV, DEVELOPMENT).lower()
 config_yaml_path = os.path.join(os.getcwd(), 'config', 'app.yml')
 
@@ -37,9 +33,6 @@ with open(config_yaml_path, "r", encoding='utf-8') as yaml_file:
 
 app = create_app(config_data, additional_config)
 
-# ---------------------------
-# Реєструємо blueprints
-# ---------------------------
 def register_blueprints(app):
     app.register_blueprint(general_controller)
     app.register_blueprint(animator_controller)
@@ -50,9 +43,7 @@ def register_blueprints(app):
 register_blueprints(app)
 Swagger(app)
 
-# ---------------------------
-# Локальний запуск для development
-# ---------------------------
+
 if __name__ == '__main__':
     if flask_env == DEVELOPMENT:
         app.run(host=HOST, port=DEVELOPMENT_PORT, debug=True)
