@@ -5,16 +5,16 @@ COMMON: &common
 development:
   <<: *common
   DEBUG: True
-  SQLALCHEMY_DATABASE_URI: "mysql://ubuntu:11111111@localhost/my_database"
+  SECRETS_MANAGER:
+    NAME: "my-database-secret"
+    REGION: "eu-north-1"
 
 production:
   <<: *common
-  SQLALCHEMY_DATABASE_URI: "mysql://ubuntu:11111111@my-database.c9skgymu8b1a.eu-north-1.rds.amazonaws.com/my_database"
+  SECRETS_MANAGER:
+    NAME: "my-database-secret"
+    REGION: "eu-north-1"
 
 ADDITIONAL_CONFIG:
-  MYSQL_USER: "ubuntu"
-  MYSQL_PASSWORD: "11111111"
-  MYSQL_DATABASE: "my_database"
-  MYSQL_HOST: "my-database.c9skgymu8b1a.eu-north-1.rds.amazonaws.com"
-  MYSQL_ROOT_USER: "ubuntu"
-  MYSQL_ROOT_PASSWORD: "11111111"
+  MYSQL_ROOT_USER: "ubuntu"  # якщо create_app потребує
+  MYSQL_ROOT_PASSWORD: null   # залишаємо пустим

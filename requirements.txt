@@ -8,6 +8,7 @@ flask-restx
 sqlalchemy
 pylint
 PyYAML
+boto3
 jsonschema
 redis
 cryptography

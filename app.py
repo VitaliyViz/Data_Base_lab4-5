@@ -8,6 +8,7 @@ from my_project.auth.controller.general_controller import (
     animator_distribute_controller
 )
 from flasgger import Swagger
+from aws_secrets import get_secret_dict, build_sqlalchemy_url_from_secret
 
 DEVELOPMENT_PORT = 5000
 PRODUCTION_PORT = 8080
@@ -17,9 +18,11 @@ PRODUCTION = "production"
 FLASK_ENV = "FLASK_ENV"
 ADDITIONAL_CONFIG = "ADDITIONAL_CONFIG"
 
+# визначаємо режим
 flask_env = os.environ.get(FLASK_ENV, DEVELOPMENT).lower()
-config_yaml_path = os.path.join(os.getcwd(), 'config', 'app.yml')
 
+# завантажуємо YAML
+config_yaml_path = os.path.join(os.getcwd(), 'config', 'app.yml')
 with open(config_yaml_path, "r", encoding='utf-8') as yaml_file:
     config_data_dict = yaml.load(yaml_file, Loader=yaml.FullLoader)
     additional_config = config_data_dict[ADDITIONAL_CONFIG]
@@ -31,6 +34,14 @@ with open(config_yaml_path, "r", encoding='utf-8') as yaml_file:
     else:
         raise ValueError(f"Check OS environment variable '{FLASK_ENV}'")
 
+# якщо є секрети, тягнемо з AWS
+if "SECRETS_MANAGER" in config_data:
+    secret_info = config_data["SECRETS_MANAGER"]
+    secret_dict = get_secret_dict(secret_info["NAME"], secret_info["REGION"])
+    sqlalchemy_uri = build_sqlalchemy_url_from_secret(secret_dict)
+    config_data["SQLALCHEMY_DATABASE_URI"] = sqlalchemy_uri
+
+# створюємо додаток
 app = create_app(config_data, additional_config)
 
 def register_blueprints(app):
@@ -42,7 +53,6 @@ def register_blueprints(app):
 
 register_blueprints(app)
 Swagger(app)
-
 
 if __name__ == '__main__':
     if flask_env == DEVELOPMENT:
