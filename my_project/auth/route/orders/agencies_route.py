@@ -199,29 +199,29 @@ def get_agencies_by_name(name: str) -> Response:
     return make_response(jsonify([agency.put_into_dto() for agency in agencies]), HTTPStatus.OK)
 
 
-@agencies_bp.get('/phone/<string:phone>')
-def get_agencies_by_phone(phone: str) -> Response:
-    """
-    Gets agencies by phone.
-    ---
-    tags:
-      - Agencies
-    parameters:
-      - in: path
-        name: phone
-        schema:
-          type: string
-        required: true
-        description: Phone number of the agency
-    responses:
-      200:
-        description: List of agencies with given phone
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: object
-    """
-    agencies = agencies_controller.get_agencies_by_phone(phone)
-    return make_response(jsonify([agency.put_into_dto() for agency in agencies]), HTTPStatus.OK)
+# @agencies_bp.get('/phone/<string:phone>')
+# def get_agencies_by_phone(phone: str) -> Response:
+#     """
+#     Gets agencies by phone.
+#     ---
+#     tags:
+#       - Agencies
+#     parameters:
+#       - in: path
+#         name: phone
+#         schema:
+#           type: string
+#         required: true
+#         description: Phone number of the agency
+#     responses:
+#       200:
+#         description: List of agencies with given phone
+#         content:
+#           application/json:
+#             schema:
+#               type: array
+#               items:
+#                 type: object
+#     """
+#     agencies = agencies_controller.get_agencies_by_phone(phone)
+#     return make_response(jsonify([agency.put_into_dto() for agency in agencies]), HTTPStatus.OK)
