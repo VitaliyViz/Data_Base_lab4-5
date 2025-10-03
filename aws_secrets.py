@@ -16,7 +16,6 @@ def get_secret_dict(secret_name: str, region_name: str = None) -> dict:
     if secret_string:
         return json.loads(secret_string)
 
-    # Якщо секрет зберігається у Binary форматі
     import base64
     return json.loads(base64.b64decode(resp["SecretBinary"]))
 

@@ -18,10 +18,8 @@ PRODUCTION = "production"
 FLASK_ENV = "FLASK_ENV"
 ADDITIONAL_CONFIG = "ADDITIONAL_CONFIG"
 
-# визначаємо режим
 flask_env = os.environ.get(FLASK_ENV, DEVELOPMENT).lower()
 
-# завантажуємо YAML
 config_yaml_path = os.path.join(os.getcwd(), 'config', 'app.yml')
 with open(config_yaml_path, "r", encoding='utf-8') as yaml_file:
     config_data_dict = yaml.load(yaml_file, Loader=yaml.FullLoader)
@@ -34,14 +32,12 @@ with open(config_yaml_path, "r", encoding='utf-8') as yaml_file:
     else:
         raise ValueError(f"Check OS environment variable '{FLASK_ENV}'")
 
-# якщо є секрети, тягнемо з AWS
 if "SECRETS_MANAGER" in config_data:
     secret_info = config_data["SECRETS_MANAGER"]
     secret_dict = get_secret_dict(secret_info["NAME"], secret_info["REGION"])
     sqlalchemy_uri = build_sqlalchemy_url_from_secret(secret_dict)
     config_data["SQLALCHEMY_DATABASE_URI"] = sqlalchemy_uri
 
-# створюємо додаток
 app = create_app(config_data, additional_config)
 
 def register_blueprints(app):

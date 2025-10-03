@@ -16,5 +16,5 @@ production:
     REGION: "eu-north-1"
 
 ADDITIONAL_CONFIG:
-  MYSQL_ROOT_USER: "ubuntu"  # якщо create_app потребує
-  MYSQL_ROOT_PASSWORD: null   # залишаємо пустим
+  MYSQL_ROOT_USER: "ubuntu"
+  MYSQL_ROOT_PASSWORD: null
