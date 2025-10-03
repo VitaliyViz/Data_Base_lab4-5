@@ -34,47 +34,47 @@ def get_all_agencies() -> Response:
     return make_response(jsonify(agencies_dto), HTTPStatus.OK)
 
 
-@agencies_bp.post('')
-def create_agency() -> Response:
-    """
-    Creates a new agency in the database.
-    ---
-    tags:
-      - Agencies
-    consumes:
-      - application/json
-    parameters:
-      - in: body
-        name: body
-        required: true
-        schema:
-          type: object
-          properties:
-            name: {type: string}
-            phone: {type: string}
-            email: {type: string}
-            address: {type: string}
-          required: [name, phone, email]
-    responses:
-      201:
-        description: Agency created
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id: {type: integer}
-                name: {type: string}
-                phone: {type: string}
-                email: {type: string}
-                address: {type: string}
-    """
-    if not request.is_json:
-        return make_response(jsonify({"error": "Content-Type must be application/json"}), 415)
-    content = request.get_json()
-    agency = Agencies.create_from_dto(content)
-    agencies_controller.create_agency(agency)
-    return make_response(jsonify(agency.put_into_dto()), HTTPStatus.CREATED)
+# @agencies_bp.post('')
+# def create_agency() -> Response:
+#     """
+#     Creates a new agency in the database.
+#     ---
+#     tags:
+#       - Agencies
+#     consumes:
+#       - application/json
+#     parameters:
+#       - in: body
+#         name: body
+#         required: true
+#         schema:
+#           type: object
+#           properties:
+#             name: {type: string}
+#             phone: {type: string}
+#             email: {type: string}
+#             address: {type: string}
+#           required: [name, phone, email]
+#     responses:
+#       201:
+#         description: Agency created
+#         content:
+#           application/json:
+#             schema:
+#               type: object
+#               properties:
+#                 id: {type: integer}
+#                 name: {type: string}
+#                 phone: {type: string}
+#                 email: {type: string}
+#                 address: {type: string}
+#     """
+#     if not request.is_json:
+#         return make_response(jsonify({"error": "Content-Type must be application/json"}), 415)
+#     content = request.get_json()
+#     agency = Agencies.create_from_dto(content)
+#     agencies_controller.create_agency(agency)
+#     return make_response(jsonify(agency.put_into_dto()), HTTPStatus.CREATED)
 
 
 @agencies_bp.get('/<int:agency_id>')
