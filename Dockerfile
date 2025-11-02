@@ -28,5 +28,4 @@ COPY . /app
 # Порт для Flask
 EXPOSE 5000
 
-# Команда запуску сервісу
 CMD ["python", "app.py"]
