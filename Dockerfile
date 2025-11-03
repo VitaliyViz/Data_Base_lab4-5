@@ -1,31 +1,19 @@
-# Базовий образ Python
 FROM python:3.12-slim
 
-# Встановлюємо змінну для неінтерактивної установки пакунків
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Робоча директорія
+# Робоча директорія всередині контейнера
 WORKDIR /app
 
-# Встановлюємо системні пакети для mysqlclient та очищаємо кеш apt одразу
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    default-libmysqlclient-dev \
-    build-essential \
-    pkg-config \
-    && rm -rf /var/lib/apt/lists/*
+# Скопіювати requirements
+COPY requirements.txt /app/
 
-# Копіюємо тільки requirements спершу (кешування Docker)
-COPY requirements.txt .
+# Встановити залежності
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Оновлюємо pip і встановлюємо Python-залежності без кешу
-RUN pip install --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
-
-# Копіюємо решту файлів проєкту
+# Скопіювати увесь код у контейнер
 COPY . /app
 
-# Порт для Flask
-EXPOSE 5000
+# Запускаємо gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
 
-CMD ["python", "app.py"]
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD curl -f http://localhost:5000/health || exit 1

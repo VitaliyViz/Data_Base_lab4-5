@@ -50,6 +50,10 @@ def register_blueprints(app):
 register_blueprints(app)
 Swagger(app)
 
+@app.route("/health")
+def health():
+    return {"status": "ok"}, 200
+
 if __name__ == '__main__':
     if flask_env == DEVELOPMENT:
         app.run(host=HOST, port=DEVELOPMENT_PORT, debug=True)
@@ -58,3 +62,4 @@ if __name__ == '__main__':
         import logging
         logging.basicConfig(level=logging.INFO)
         serve(app, host=HOST, port=PRODUCTION_PORT)
+
