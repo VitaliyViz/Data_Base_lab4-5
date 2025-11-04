@@ -1,0 +1,12 @@
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.log
+.git
+.gitignore
+__MACOSX
+.env
+awscliv2.zip
