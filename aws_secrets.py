@@ -30,4 +30,5 @@ def build_sqlalchemy_url_from_secret(secret: dict) -> str:
     if not all([user, pwd, host, db]):
         raise ValueError("Secret JSON must include username, password, host and database")
 
-    return f"mysql://{user}:{pwd}@{host}:{port}/{db}"
+    return f"mysql+pymysql://{user}:{pwd}@{host}:{port}/{db}"
+
