@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  cloud-labs-1:
+    image: cloud-labs
+    container_name: cloud-labs-1
+    ports:
+      - "5001:5000"
+  cloud-labs-2:
+    image: cloud-labs
+    container_name: cloud-labs-2
+    ports:
+      - "5002:5000"
+  cloud-labs-3:
+    image: cloud-labs
+    container_name: cloud-labs-3
+    ports:
+      - "5003:5000"
