@@ -49,7 +49,21 @@ def register_blueprints(app):
 
 register_blueprints(app)
 
-Swagger(app, config={'specs_route': '/swagger'})
+Swagger(app, config={
+    "headers": [],
+    "specs": [
+        {
+            "endpoint": 'apispec',
+            "route": '/swagger.json',
+            "rule_filter": lambda rule: True,  # усі ендпоінти
+            "model_filter": lambda tag: True,  # усі моделі
+        }
+    ],
+    "static_url_path": "/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/swagger"
+})
+
 
 @app.route("/health")
 def health():
