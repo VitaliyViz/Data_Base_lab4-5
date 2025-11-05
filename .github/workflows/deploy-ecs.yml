@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+
+# Параметри
+AWS_REGION="eu-north-1"
+ECR_REPO="cloud-labs"
+TASK_DEF="cloud-labs-task-definition"
+CONTAINER_NAME="cloud-labs"
+
+# Отримати SHA коміту для тегу образу
+IMAGE_TAG=${GITHUB_SHA::8}
+IMAGE_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}"
+
+# Логін в ECR
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
+# Build і push образ
+docker build -t $ECR_REPO:$IMAGE_TAG .
+docker tag $ECR_REPO:$IMAGE_TAG $IMAGE_URI
+docker push $IMAGE_URI
+
+# Оновлення Task Definition
+aws ecs describe-task-definition --task-definition $TASK_DEF --query "taskDefinition" > taskdef.json
+jq --arg IMAGE_URI "$IMAGE_URI" '.containerDefinitions[0].image=$IMAGE_URI | del(.status,.revision,.taskDefinitionArn,.requiresAttributes,.compatibilities,.registeredAt,.registeredBy)' taskdef.json > new-taskdef.json
+aws ecs register-task-definition --cli-input-json file://new-taskdef.json
+
+echo "Task Definition $TASK_DEF оновлено з образом $IMAGE_URI"
