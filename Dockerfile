@@ -14,4 +14,3 @@ COPY . /app
 
 # Запускаємо gunicorn
 CMD ["python", "app.py"]
-
