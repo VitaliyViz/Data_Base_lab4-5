@@ -48,7 +48,8 @@ def register_blueprints(app):
     app.register_blueprint(animator_distribute_controller)
 
 register_blueprints(app)
-Swagger(app)
+
+Swagger(app, config={'specs_route': '/swagger'})
 
 @app.route("/health")
 def health():
@@ -62,4 +63,3 @@ if __name__ == '__main__':
         import logging
         logging.basicConfig(level=logging.INFO)
         serve(app, host=HOST, port=PRODUCTION_PORT)
-
