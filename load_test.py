@@ -14,7 +14,6 @@ lock = threading.Lock()
 ok = 0
 err = 0
 
-
 def worker(thread_id):
     global ok, err
     session = requests.Session()
